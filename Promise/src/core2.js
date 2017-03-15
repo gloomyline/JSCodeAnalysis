@@ -2,7 +2,7 @@
 * @Author: gloomyline
 * @Date:   2017-03-15 11:50:11
 * @Last Modified by:   gloomyline
-* @Last Modified time: 2017-03-15 11:54:23
+* @Last Modified time: 2017-03-15 15:55:38
 */
 
 'use strict';
@@ -21,16 +21,17 @@ function Promise(executor) {
 		if (value instanceof Promise) {
 			return value.then(resolve, reject)
 		}
-    setTimeout(function() { // 异步执行所有的回调函数
-    	if (self.status === 'pending') {
-    		self.status = 'resolved'
-    		self.data = value
-    		for (var i = 0; i < self.onResolvedCallback.length; i++) {
-    			self.onResolvedCallback[i](value)
-    		}
-    	}
-    })
-}
+
+	    setTimeout(function() { // 异步执行所有的回调函数
+	    	if (self.status === 'pending') {
+	    		self.status = 'resolved'
+	    		self.data = value
+	    		for (var i = 0; i < self.onResolvedCallback.length; i++) {
+	    			self.onResolvedCallback[i](value)
+	    		}
+	    	}
+	    })
+	}
 
 	function reject(reason) {
 	    setTimeout(function() { // 异步执行所有的回调函数
@@ -67,7 +68,7 @@ function resolvePromise(promise2, x, resolve, reject) {
 	    } else { //but if it is resolved, it will never resolved by a Promise Object but a static value;
 	    	x.then(resolve, reject)
 	    }
-    return
+    	return
 	}
 
 	if ((x !== null) && ((typeof x === 'object') || (typeof x === 'function'))) {
